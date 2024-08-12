@@ -1,5 +1,6 @@
 ﻿#include "../exercise.h"
 #include <vector>
+#include <algorithm>
 
 // 张量即多维数组。连续存储张量即逻辑结构与存储结构一致的张量。
 // 通常来说，形状为 [d0, d1, ..., dn] 的张量，第 n 维是 dn 个连续的元素，第 n-1 维是 dn-1 个连续的 dn 个元素，以此类推。
@@ -15,9 +16,15 @@ using udim = unsigned int;
 /// @return 张量每维度的访问步长
 std::vector<udim> strides(std::vector<udim> const &shape) {
     std::vector<udim> strides(shape.size());
-    // TODO: 完成函数体，根据张量形状计算张量连续存储时的步长。
-    // READ: 逆向迭代器 std::vector::rbegin <https://zh.cppreference.com/w/cpp/container/vector/rbegin>
-    //       使用逆向迭代器可能可以简化代码
+    strides.back() = 1;
+    for (int i = shape.size() - 2; i >= 0; --i) { // size_t = unsigned, overflow(x)
+        strides[i] = strides[i + 1] * shape[i + 1];
+//        printf("%u %u\n", i, strides[i]);
+    }
+//    for(auto s:strides) {
+//        printf("%u ", s);
+//    }
+//    printf("\n");
     return strides;
 }
 

@@ -5,7 +5,17 @@
 struct Fibonacci {
     int numbers[11];
     // TODO: 修改方法签名和实现，使测试通过
-    int get(int i) {
+    Fibonacci() : numbers{0} {}
+    constexpr Fibonacci(std::initializer_list<int> arg) : numbers{} {
+        int i=0;
+        for (int num:arg) {
+            if (i<11) {
+                numbers[i++]=num;
+            }
+        }
+    }
+    int get(int i) const {
+        return numbers[i];
     }
 };
 
